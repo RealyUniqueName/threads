@@ -1,18 +1,18 @@
 package test;
 
-import haxe.Timer;
+import render.Scene;
 import threads.DataTransport;
 import threads.Worker;
 
-
-
 /**
-* Description
+* Add more bannies
 *
 */
-class Counter extends Worker{
-    /** description */
-    public var stamp : Float = 0;
+class AddData extends DataTransport{
+
+    /** how many bunnies to add */
+    public var amount : Int = 1;
+
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -25,17 +25,22 @@ class Counter extends Worker{
 *******************************************************************************/
 
     /**
-    * Entry
+    * Description
     *
     */
-    override public function main () : Void {
-        trace(Timer.stamp() - this.stamp);
-        this.stamp = Timer.stamp();
-    }//function main()
-
+    override public function process (worker:Worker) : Void {
+        var scene : Scene = cast worker;
+        var bunny : Bunny;
+        while( amount-- > 0 ){
+            bunny = new Bunny();
+            bunny.x = scene.width * Math.random();
+            bunny.y = scene.height * 0.5 * Math.random();
+            scene.addSprite(bunny);
+        }
+    }//function process()
 
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
 
-}//class Counter
+}//class AddData

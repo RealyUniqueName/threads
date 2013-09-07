@@ -21,6 +21,8 @@ class Worker {
     private var _cycleDuration : Float = 1;
     /** incoming data */
     private var _inData : Deque<DataTransport>;
+    /** outgoing data */
+    private var _outData : Deque<DataTransport>;
     /** Worker will work until this is set to false */
     private var _keepWorking : Bool = true;
 
@@ -41,7 +43,8 @@ class Worker {
     *
     */
     public function new () : Void {
-        this._inData = new Deque();
+        this._inData  = new Deque();
+        this._outData = new Deque();
     }//function new()
 
 
@@ -70,8 +73,28 @@ class Worker {
     *
     */
     public function handle (data:DataTransport) : Void {
+        data.sendTime = Timer.stamp();
         this._inData.add(data);
     }//function handle()
+
+
+    /**
+    * Send data to outgoing channel
+    *
+    */
+    public function send (data:DataTransport) : Void {
+        data.sendTime = Timer.stamp();
+        this._outData.add(data);
+    }//function send()
+
+
+    /**
+    * Get data from outgoing channel
+    *
+    */
+    public function getData () : DataTransport {
+        return this._outData.pop(false);
+    }//function getData()
 
 
     /**
@@ -79,20 +102,20 @@ class Worker {
     *
     */
     private function _work () : Void {
-        var inTime         : Float = Timer.stamp();
-        var nextTime       : Float = inTime + this._cycleDuration;
-        var outTime        : Float;
-        var dataModifyTime : Float;
-        var data           : DataTransport;
+        var inTime       : Float = Timer.stamp();
+        var nextTime     : Float = inTime + this._cycleDuration;
+        var outTime      : Float;
+        var dataSendTime : Float;
+        var data         : DataTransport;
 
         while( this._keepWorking ){
             //process incoming data {
                 data = this._inData.pop(false);
                 while( data != null ){
-                    dataModifyTime = data.modifyTime;
-                    this.onData(data);
+                    dataSendTime = data.sendTime;
+                    data.process(this);
 
-                    if( dataModifyTime < inTime ){
+                    if( dataSendTime < inTime ){
                         data = this._inData.pop(false);
                     }else{
                         data = null;
@@ -107,6 +130,8 @@ class Worker {
                 Sys.sleep(nextTime - outTime);
                 inTime   = nextTime;
                 nextTime = inTime + this._cycleDuration;
+            }else{
+                this.onOverwork();
             }
         }
     }//function _work()
@@ -121,11 +146,11 @@ class Worker {
 
 
     /**
-    * Handle incoming messages
+    * This method will be called if worker exceeds time limit for one cycle duration
     *
     */
-    public function onData (data:DataTransport) : Void {
-    }//function onData()
+    public function onOverwork () : Void {
+    }//function onOverwork()
 
 
 /*******************************************************************************

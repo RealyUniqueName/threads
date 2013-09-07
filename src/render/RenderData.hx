@@ -1,18 +1,20 @@
-package test;
+package render;
 
-import haxe.Timer;
+import render.Scene;
 import threads.DataTransport;
 import threads.Worker;
 
 
-
 /**
-* Description
+* Tiles data for Tilesheet.drawTiles()
 *
 */
-class Counter extends Worker{
-    /** description */
-    public var stamp : Float = 0;
+class RenderData extends DataTransport{
+
+    /** draw data array */
+    public var drawData : Array<Float>;
+    /** amount of up-to-date elements in drawData */
+    public var dataLength : Int = 0;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -25,17 +27,25 @@ class Counter extends Worker{
 *******************************************************************************/
 
     /**
-    * Entry
+    * Constructor
     *
     */
-    override public function main () : Void {
-        trace(Timer.stamp() - this.stamp);
-        this.stamp = Timer.stamp();
-    }//function main()
+    public function new () : Void {
+        super();
+        this.drawData = [];
+    }//function new()
 
+
+    /**
+    * Process received data
+    *
+    */
+    override public function process (worker:Worker) : Void {
+        cast(worker, Scene).setFreeRenderData(this);
+    }//function process()
 
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
 
-}//class Counter
+}//class RenderData

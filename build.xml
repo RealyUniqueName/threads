@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+    <meta title="threads" package="ru.stablex.threads" version="0.0.1" company="R.U.N" />
+    <app path="./build" file="tt" main="test.Main" />
+
+    <window width="800" height="600" background="0xFFFFFF" fps="30"/>
+
+    <source name="src/" />
+
+    <assets path="assets" />
+
+    <haxelib name="openfl" />
+
+</project>

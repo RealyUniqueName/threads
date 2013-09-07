@@ -1,5 +1,5 @@
 -cp src
--main test.Main
+-main test.Test
 -cpp build/threads
 -debug
--cmd echo "\nRunning..." && ./build/threads/Main-debug
+-cmd echo "\nRunning..." && ./build/threads/Test-debug
