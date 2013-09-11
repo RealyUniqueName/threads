@@ -22,6 +22,12 @@ class Scene extends Worker{
     public var width : Float = 800;
     /** scene height */
     public var height : Float = 600;
+    /** object for preparing data for drawTiles() calls */
+    private var _drawDataPrep : Array<Float>;
+    /** prepared data for drawTiles() calls */
+    public var drawData (default,null) : Array<Float>;
+    /** helper var for array swapping */
+    private var _tmpData : Array<Float>;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -39,6 +45,8 @@ class Scene extends Worker{
     public function new () : Void {
         super();
         this._children = [];
+        this._drawDataPrep = [];
+        this.drawData  = [];
     }//function new()
 
 
@@ -85,10 +93,10 @@ class Scene extends Worker{
     *
     */
     override public function main () : Void {
-        var sprite : Sprite;
-        var data   : RenderData = this.getFreeRenderData();
-        var cos    : Float;
-        var sin    : Float;
+        var sprite     : Sprite;
+        var cos        : Float;
+        var sin        : Float;
+        var dataLength : Int = 0;
 
         for(i in 0...this._children.length){
             sprite = this._children[i];
@@ -97,18 +105,18 @@ class Scene extends Worker{
                 cos = Math.cos(sprite.rotation);
                 sin = Math.sin(sprite.rotation);
 
-                data.drawData[ data.dataLength++ ] = sprite.x;
-                data.drawData[ data.dataLength++ ] = sprite.y;
-                data.drawData[ data.dataLength++ ] = sprite.tile;
-                data.drawData[ data.dataLength++ ] = sprite.scaleX * cos;
-                data.drawData[ data.dataLength++ ] = sin;
-                data.drawData[ data.dataLength++ ] = -sin;
-                data.drawData[ data.dataLength++ ] = sprite.scaleY * cos;
+                this._drawDataPrep[ dataLength++ ] = sprite.x;
+                this._drawDataPrep[ dataLength++ ] = sprite.y;
+                this._drawDataPrep[ dataLength++ ] = sprite.tile;
+                this._drawDataPrep[ dataLength++ ] = sprite.scaleX * cos;
+                this._drawDataPrep[ dataLength++ ] = sin;
+                this._drawDataPrep[ dataLength++ ] = -sin;
+                this._drawDataPrep[ dataLength++ ] = sprite.scaleY * cos;
 
-                // data.drawData[ data.dataLength++ ] = sprite.red;
-                // data.drawData[ data.dataLength++ ] = sprite.green;
-                // data.drawData[ data.dataLength++ ] = sprite.blue;
-                data.drawData[ data.dataLength++ ] = sprite.alpha;
+                this._drawDataPrep[ dataLength++ ] = sprite.red;
+                this._drawDataPrep[ dataLength++ ] = sprite.green;
+                this._drawDataPrep[ dataLength++ ] = sprite.blue;
+                this._drawDataPrep[ dataLength++ ] = sprite.alpha;
             }
 
             if( sprite.runUpdate ){
@@ -116,7 +124,13 @@ class Scene extends Worker{
             }
         }
 
-        this.send(data);
+        if( dataLength < this._drawDataPrep.length ){
+            this._drawDataPrep.splice(dataLength, 0xFFFFFF);
+        }
+
+        this._tmpData      = this.drawData;
+        this.drawData      = this._drawDataPrep;
+        this._drawDataPrep = this._tmpData;
     }//function main()
 
 

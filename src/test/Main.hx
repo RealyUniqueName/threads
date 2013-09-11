@@ -47,7 +47,17 @@ class Main {
         ts.addTileRect( new Rectangle(0, 0, bmp.width, bmp.height), new Point(bmp.width / 2, bmp.height / 2) );
 
         scene = new Scene();
-        scene.fps = Std.int(Lib.current.stage.frameRate);
+        scene.fps = Std.int(Lib.current.stage.frameRate / 2);
+
+        var bunny : Bunny;
+        var amount : Int = 10;
+        while( amount-- > 0 ){
+            bunny = new Bunny();
+            bunny.x = scene.width * Math.random();
+            bunny.y = scene.height * 0.5 * Math.random();
+            scene.addSprite(bunny);
+        }
+
         scene.run();
 
         Lib.current.addEventListener(Event.ENTER_FRAME, onFrame);
@@ -66,22 +76,24 @@ class Main {
     *
     */
     static public function onFrame (e:Event = null) : Void {
-        var data  : RenderData = cast scene.getData();
-        var data2 : RenderData = cast scene.getData();
-        while( data2 != null ){
-            scene.handle(data);
-            data  = data2;
-            data2 = cast scene.getData();
-        }
+        Lib.current.graphics.clear();
+        ts.drawTiles(Lib.current.graphics, scene.drawData, true, Tilesheet.TILE_TRANS_2x2 | Tilesheet.TILE_RGB | Tilesheet.TILE_ALPHA);
+        // var data  : RenderData = cast scene.getData();
+        // var data2 : RenderData = cast scene.getData();
+        // while( data2 != null ){
+        //     scene.handle(data);
+        //     data  = data2;
+        //     data2 = cast scene.getData();
+        // }
 
-        if( data != null ){
-            Lib.current.graphics.clear();
-            if( data.drawData.length > data.dataLength ){
-                data.drawData.splice(data.dataLength, 0xFFFFFF);
-            }
-            ts.drawTiles(Lib.current.graphics, data.drawData, true, Tilesheet.TILE_TRANS_2x2 /* | Tilesheet.TILE_RGB */ | Tilesheet.TILE_ALPHA);
-            scene.handle(data);
-        }
+        // if( data != null ){
+        //     Lib.current.graphics.clear();
+        //     if( data.drawData.length > data.dataLength ){
+        //         data.drawData.splice(data.dataLength, 0xFFFFFF);
+        //     }
+        //     ts.drawTiles(Lib.current.graphics, data.drawData, true, Tilesheet.TILE_TRANS_2x2 /* | Tilesheet.TILE_RGB */ | Tilesheet.TILE_ALPHA);
+        //     scene.handle(data);
+        // }
 
         if( addMore ){
             var add = new AddData();

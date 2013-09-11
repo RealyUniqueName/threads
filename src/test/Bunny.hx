@@ -41,6 +41,9 @@ class Bunny extends Sprite{
 
         this.angularSpeed = Math.PI / 10 * (2 * Math.random() - 1);
 
+        this.scaleX = -1 + 2 * Math.random();
+        this.scaleY = -1 + 2 * Math.random();
+
         this.alpha = 0.2 + 0.8 * Math.random();
         this.red   = 0.2 + 0.8 * Math.random();
         this.green = 0.2 + 0.8 * Math.random();
@@ -65,6 +68,12 @@ class Bunny extends Sprite{
 
         this.x += this.speedX;
         this.y += this.speedY;
+
+        this.scaleX += 0.05;
+        this.scaleY += 0.05;
+
+        if( this.scaleX > 1 || this.scaleX < -1 ) this.scaleX *= -1;
+        if( this.scaleY > 1 || this.scaleY < -1 ) this.scaleY *= -1;
 
         this.rotation += this.angularSpeed;
     }//function update()

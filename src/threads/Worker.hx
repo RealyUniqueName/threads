@@ -109,19 +109,19 @@ class Worker {
         var data         : DataTransport;
 
         while( this._keepWorking ){
-            //process incoming data {
-                data = this._inData.pop(false);
-                while( data != null ){
-                    dataSendTime = data.sendTime;
-                    data.process(this);
+            // //process incoming data {
+            //     data = this._inData.pop(false);
+            //     while( data != null ){
+            //         dataSendTime = data.sendTime;
+            //         data.process(this);
 
-                    if( dataSendTime < inTime ){
-                        data = this._inData.pop(false);
-                    }else{
-                        data = null;
-                    }
-                }
-            //}
+            //         if( dataSendTime < inTime ){
+            //             data = this._inData.pop(false);
+            //         }else{
+            //             data = null;
+            //         }
+            //     }
+            // //}
 
             this.main();
 
