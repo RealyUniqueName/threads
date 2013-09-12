@@ -11,5 +11,6 @@
     <assets path="assets" />
 
     <haxelib name="openfl" />
+    <haxelib name="nape" />
 
 </project>

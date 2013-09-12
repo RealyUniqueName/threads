@@ -1,5 +1,7 @@
 package test;
 
+import usys.vm.Deque;
+import usys.vm.Mutex;
 import haxe.Timer;
 
 /**
@@ -7,8 +9,9 @@ import haxe.Timer;
 *
 */
 class Test {
-
-
+    private var mtx : Mutex;
+    private var arr : Array<Int>;
+    private var deq : Deque<Int>;
 /*******************************************************************************
 *       STATIC METHODS
 *******************************************************************************/
@@ -18,40 +21,27 @@ class Test {
     *
     */
     static public function main () : Void {
-trace('POP:');
-        for(i in 0...5){
+        var t = new Test();
+        var repeat = 10000;
+
+        trace('MUTEX');
+        for(q in 0...5){
             Sys.sleep(0.5);
-
-            var arr : Array<Int> = [for(i in 0...0xFFFFFF) i];
-
-            var q : Int = 1;
-
-            Sys.sleep(0.5);
-
             var tm = Timer.stamp();
-
-            while(arr.length > q){
-                arr.pop();
+            for(i in 0...repeat){
+                t.mtxAdd(i);
             }
-
-            trace(haxe.Timer.stamp() - tm);
+            trace(Timer.stamp() - tm);
         }
 
-trace('SPLICE:');
-        for(i in 0...5){
+        trace('DEQUE');
+        for(q in 0...3){
             Sys.sleep(0.5);
-
-            var arr : Array<Int> = [for(i in 0...0xFFFFFF) i];
-
-            var q : Int = 1;
-
-            Sys.sleep(0.5);
-
             var tm = Timer.stamp();
-
-            arr.splice(q,0xFFFFFF);
-
-            trace(haxe.Timer.stamp() - tm);
+            for(i in 0...repeat){
+                t.deqAdd(i);
+            }
+            trace(Timer.stamp() - tm);
         }
     }//function main()
 
@@ -59,7 +49,24 @@ trace('SPLICE:');
 *       INSTANCE METHODS
 *******************************************************************************/
 
+    public function new(){
+        mtx = new Mutex();
+        arr = [];
+        deq = new Deque();
+    }
 
+
+    public inline function mtxAdd(v:Int){
+        this.mtx.acquire();
+        //arr.push(v);
+        arr.pop();
+        this.mtx.release();
+    }
+
+    public inline function deqAdd(v:Int){
+        //deq.push(v);
+        deq.pop(false);
+    }
 
 /*******************************************************************************
 *       GETTERS / SETTERS

@@ -1,7 +1,6 @@
 package threads;
 
 import haxe.Timer;
-import threads.DataTransport;
 import usys.vm.Deque;
 import usys.vm.Thread;
 
@@ -13,16 +12,14 @@ import usys.vm.Thread;
 class Worker {
     /** worker's thread */
     public var thread (default,null) : Thread;
+    /** parent thread */
+    public var parent (default,null) : Thread;
     /** amount of cycles per second */
     public var cps (get,set) : Float;
     private var _cps : Float = 1;
     /** time frame for one cycle */
     public var cycleDuration (get,set) : Float;
     private var _cycleDuration : Float = 1;
-    /** incoming data */
-    private var _inData : Deque<DataTransport>;
-    /** outgoing data */
-    private var _outData : Deque<DataTransport>;
     /** Worker will work until this is set to false */
     private var _keepWorking : Bool = true;
 
@@ -43,8 +40,6 @@ class Worker {
     *
     */
     public function new () : Void {
-        this._inData  = new Deque();
-        this._outData = new Deque();
     }//function new()
 
 
@@ -54,47 +49,19 @@ class Worker {
     */
     public function run () : Void {
         if( this.thread != null ) throw "Worker can start one time only";
-
+        this.parent = Thread.current();
         this.thread = Thread.create(this._work);
     }//function run()
 
 
     /**
-    * Stop worker
+    * Stop working after cycle completion
+    *
     *
     */
     public function stop () : Void {
         this._keepWorking = false;
     }//function stop()
-
-
-    /**
-    * Send some data to this owrker
-    *
-    */
-    public function handle (data:DataTransport) : Void {
-        data.sendTime = Timer.stamp();
-        this._inData.add(data);
-    }//function handle()
-
-
-    /**
-    * Send data to outgoing channel
-    *
-    */
-    public function send (data:DataTransport) : Void {
-        data.sendTime = Timer.stamp();
-        this._outData.add(data);
-    }//function send()
-
-
-    /**
-    * Get data from outgoing channel
-    *
-    */
-    public function getData () : DataTransport {
-        return this._outData.pop(false);
-    }//function getData()
 
 
     /**
@@ -105,34 +72,19 @@ class Worker {
         var inTime       : Float = Timer.stamp();
         var nextTime     : Float = inTime + this._cycleDuration;
         var outTime      : Float;
-        var dataSendTime : Float;
-        var data         : DataTransport;
 
         while( this._keepWorking ){
-            // //process incoming data {
-            //     data = this._inData.pop(false);
-            //     while( data != null ){
-            //         dataSendTime = data.sendTime;
-            //         data.process(this);
-
-            //         if( dataSendTime < inTime ){
-            //             data = this._inData.pop(false);
-            //         }else{
-            //             data = null;
-            //         }
-            //     }
-            // //}
 
             this.main();
 
             outTime = Timer.stamp();
             if( nextTime > outTime ){
                 Sys.sleep(nextTime - outTime);
-                inTime   = nextTime;
-                nextTime = inTime + this._cycleDuration;
             }else{
-                this.onOverwork();
+                this.onOverwork(outTime - nextTime);
             }
+            inTime   = nextTime;
+            nextTime = inTime + this._cycleDuration;
         }
     }//function _work()
 
@@ -148,8 +100,9 @@ class Worker {
     /**
     * This method will be called if worker exceeds time limit for one cycle duration
     *
+    * @param deltaTime - amount of excess seconds spent for last cycle
     */
-    public function onOverwork () : Void {
+    public function onOverwork (deltaTime:Float) : Void {
     }//function onOverwork()
 
 
