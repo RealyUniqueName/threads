@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="openfl" type="Haxe">
+    <CLASSES>
+      <root url="file:///usr/lib/haxe/lib/openfl/1,0,6" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file:///usr/lib/haxe/lib/openfl/1,0,6" />
+    </SOURCES>
+  </library>
+</component>

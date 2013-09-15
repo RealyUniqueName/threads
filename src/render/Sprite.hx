@@ -1,5 +1,6 @@
 package render;
 
+import usys.vm.Mutex;
 import render.Scene;
 
 
@@ -29,12 +30,13 @@ class Sprite {
     public var green : Float = 1;
     /** blue color multiplier */
     public var blue : Float = 1;
-    /** do we need to call `.update()` on every frame */
+    /** do we need to call `.update()` on every frame? */
     public var runUpdate : Bool = false;
     /** visibility */
     public var visible : Bool = true;
     /** scene instance */
     public var scene : Scene = null;
+
 
 /*******************************************************************************
 *       STATIC METHODS

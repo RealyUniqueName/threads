@@ -1,6 +1,5 @@
 package render;
 
-import render.RenderData;
 import render.Sprite;
 import threads.Worker;
 
@@ -12,8 +11,6 @@ import threads.Worker;
 */
 class Scene extends Worker{
 
-    /** available container for drawTiles data */
-    private var _renderData : RenderData = null;
     /** frames per second */
     public var fps (get,set) : Int;
     /** sprites on this scene */
@@ -28,6 +25,9 @@ class Scene extends Worker{
     public var drawData (default,null) : Array<Float>;
     /** helper var for array swapping */
     private var _tmpData : Array<Float>;
+    /** whether to skip one frame update */
+    public var skipFrame : Bool = false;
+
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -61,34 +61,6 @@ class Scene extends Worker{
 
 
     /**
-    * Get empty render data
-    *
-    */
-    public inline function getFreeRenderData () : RenderData {
-        if( this._renderData == null ){
-            return new RenderData();
-
-        }else{
-            var data = this._renderData;
-            data.dataLength = 0;
-
-            this._renderData = null;
-
-            return data;
-        }
-    }//function getFreeRenderData()
-
-
-    /**
-    * Store free data transport
-    *
-    */
-    public inline function setFreeRenderData (data:RenderData) : Void {
-        this._renderData = data;
-    }//function setFreeRenderData()
-
-
-    /**
     * Main cycle
     *
     */
@@ -101,16 +73,23 @@ class Scene extends Worker{
         for(i in 0...this._children.length){
             sprite = this._children[i];
 
-            if( sprite.visible ){
+            if( sprite.visible && !this.skipFrame ){
+
                 cos = Math.cos(sprite.rotation);
                 sin = Math.sin(sprite.rotation);
 
                 this._drawDataPrep[ dataLength++ ] = sprite.x;
                 this._drawDataPrep[ dataLength++ ] = sprite.y;
                 this._drawDataPrep[ dataLength++ ] = sprite.tile;
+                // [ a, b
+                //   c, d ]
+                //a
                 this._drawDataPrep[ dataLength++ ] = sprite.scaleX * cos;
-                this._drawDataPrep[ dataLength++ ] = sin;
-                this._drawDataPrep[ dataLength++ ] = -sin;
+                //b
+                this._drawDataPrep[ dataLength++ ] = sprite.scaleX * sin;
+                //c
+                this._drawDataPrep[ dataLength++ ] = -sprite.scaleY * sin;
+                //d
                 this._drawDataPrep[ dataLength++ ] = sprite.scaleY * cos;
 
                 this._drawDataPrep[ dataLength++ ] = sprite.red;
@@ -124,13 +103,20 @@ class Scene extends Worker{
             }
         }
 
-        if( dataLength < this._drawDataPrep.length ){
-            this._drawDataPrep.splice(dataLength, 0xFFFFFF);
-        }
+        //don't update draw data if we need to skip this frame
+        if( this.skipFrame ){
+            this.skipFrame = false;
 
-        this._tmpData      = this.drawData;
-        this.drawData      = this._drawDataPrep;
-        this._drawDataPrep = this._tmpData;
+        //update draw data
+        }else{
+            if( dataLength < this._drawDataPrep.length ){
+                this._drawDataPrep.splice(dataLength, 0xFFFFFF);
+            }
+
+            this._tmpData      = this.drawData;
+            this.drawData      = this._drawDataPrep;
+            this._drawDataPrep = this._tmpData;
+        }
     }//function main()
 
 
@@ -138,8 +124,9 @@ class Scene extends Worker{
     * Too much work
     *
     */
-    override public function onOverwork () : Void {
-        trace('Overwork - ' + this._children.length);
+    override public function onOverwork (delta:Float) : Void {
+        this.skipFrame = true;
+        trace('Overwork - ' + this._children.length + ' - by ' + delta + ' seconds');
     }//function onOverwork()
 
 /*******************************************************************************

@@ -8,14 +8,7 @@ import flash.Lib;
 import flash.text.TextField;
 import openfl.Assets;
 import openfl.display.Tilesheet;
-import render.RenderData;
 import render.Scene;
-
-import haxe.Timer;
-import test.AddData;
-
-// import test.Counter;
-// import test.Transport;
 
 
 
@@ -49,14 +42,22 @@ class Main {
         scene = new Scene();
         scene.fps = Std.int(Lib.current.stage.frameRate / 2);
 
-        var bunny : Bunny;
-        var amount : Int = 10;
+        var bunny : Bunny = null;
+        var amount : Int = 30000;
         while( amount-- > 0 ){
             bunny = new Bunny();
             bunny.x = scene.width * Math.random();
-            bunny.y = scene.height * 0.5 * Math.random();
+            bunny.y = scene.height * 0.7 * Math.random();
             scene.addSprite(bunny);
         }
+
+//        bunny.runUpdate = false;
+//        bunny.alpha = 1;
+//        bunny.green = bunny.blue = bunny.red = bunny.alpha = 1;
+//        bunny.scaleX = bunny.scaleY = 1;
+//        bunny.rotation = 0;
+//        bunny.x = scene.width / 2;
+//        bunny.y = scene.height / 2;
 
         scene.run();
 
@@ -95,12 +96,7 @@ class Main {
         //     scene.handle(data);
         // }
 
-        if( addMore ){
-            var add = new AddData();
-            add.amount = 1000;
-            scene.handle(add);
-            counter.text = '' + (Std.parseInt(counter.text) + add.amount);
-        }
+
     }//function onFrame()
 
 /*******************************************************************************
