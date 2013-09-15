@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9f3191a0-6d8c-4802-abea-67a4a37e9d4e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/render/RenderData.hx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/AddData.hx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/threads/DataTransport.hx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/Main.hx" afterPath="$PROJECT_DIR$/src/test/Main.hx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/render/Scene.hx" afterPath="$PROJECT_DIR$/src/render/Scene.hx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/render/Sprite.hx" afterPath="$PROJECT_DIR$/src/render/Sprite.hx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/Test.hx" afterPath="$PROJECT_DIR$/src/test/Test.hx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/threads/Worker.hx" afterPath="$PROJECT_DIR$/src/threads/Worker.hx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.hxml" afterPath="$PROJECT_DIR$/build.hxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
-    </list>
+    <list default="true" id="9f3191a0-6d8c-4802-abea-67a4a37e9d4e" name="Default" comment="" />
     <ignored path="threads.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,7 +18,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -66,6 +54,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -87,7 +76,7 @@
       <file leaf-file-name="Sim.hx" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/phys/Sim.hx">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="22" selection-start="1616" selection-end="1616" vertical-scroll-proportion="0.0" vertical-offset="269" max-vertical-offset="1170">
+            <state line="64" column="22" selection-start="1616" selection-end="1616" vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="1170">
               <folding />
             </state>
           </provider>
@@ -105,7 +94,7 @@
       <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="23" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+            <state line="13" column="23" selection-start="377" selection-end="377" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="330">
               <folding />
             </state>
           </provider>
@@ -123,7 +112,7 @@
       <file leaf-file-name="Sprite.hx" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/render/Sprite.hx">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="68" selection-start="1506" selection-end="1506" vertical-scroll-proportion="0.75027746" vertical-offset="209" max-vertical-offset="1125">
+            <state line="44" column="0" selection-start="1141" selection-end="1141" vertical-scroll-proportion="0.4989224" vertical-offset="197" max-vertical-offset="1125">
               <folding />
             </state>
           </provider>
@@ -203,8 +192,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -293,6 +280,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -309,8 +298,8 @@
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
@@ -345,6 +334,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -370,19 +372,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -485,7 +474,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.106925204" sideWeight="0.670247" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.106738545" sideWeight="0.670247" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -526,16 +515,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.hxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="48" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="135">
-          <folding />
-        </state>
+        <state line="3" column="48" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="135" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/usys/vm/Deque.hx">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/usys/vm/Mutex.hx">
@@ -547,9 +532,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.hxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="48" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-          <folding />
-        </state>
+        <state line="3" column="48" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/Test.hx">
@@ -561,16 +544,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/threads/Pipe.hx">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="32" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1080">
-          <folding />
-        </state>
+        <state line="13" column="32" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1080" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/usys/vm/Thread.hx">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="8" selection-start="27" selection-end="27" vertical-scroll-proportion="0.049944505" vertical-offset="0" max-vertical-offset="901">
-          <folding />
-        </state>
+        <state line="3" column="8" selection-start="27" selection-end="27" vertical-scroll-proportion="0.049944505" vertical-offset="0" max-vertical-offset="901" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
@@ -617,7 +596,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/render/Sprite.hx">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="68" selection-start="1506" selection-end="1506" vertical-scroll-proportion="0.75027746" vertical-offset="209" max-vertical-offset="1125">
+        <state line="44" column="0" selection-start="1141" selection-end="1141" vertical-scroll-proportion="0.4989224" vertical-offset="197" max-vertical-offset="1125">
           <folding />
         </state>
       </provider>
