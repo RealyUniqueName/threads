@@ -43,7 +43,7 @@ class Main {
         scene.fps = Std.int(Lib.current.stage.frameRate / 2);
 
         var bunny : Bunny = null;
-        var amount : Int = 30000;
+        var amount : Int = 120000;
         while( amount-- > 0 ){
             bunny = new Bunny();
             bunny.x = scene.width * Math.random();
@@ -78,7 +78,7 @@ class Main {
     */
     static public function onFrame (e:Event = null) : Void {
         Lib.current.graphics.clear();
-        ts.drawTiles(Lib.current.graphics, scene.drawData, true, Tilesheet.TILE_TRANS_2x2 | Tilesheet.TILE_RGB | Tilesheet.TILE_ALPHA);
+        ts.drawTiles(Lib.current.graphics, scene.getDrawData(), true, Tilesheet.TILE_TRANS_2x2 | Tilesheet.TILE_RGB | Tilesheet.TILE_ALPHA);
         // var data  : RenderData = cast scene.getData();
         // var data2 : RenderData = cast scene.getData();
         // while( data2 != null ){

@@ -9,6 +9,8 @@ import haxe.Timer;
 *
 */
 class Test {
+    /** description */
+    public var q : Int = 0;
     private var mtx : Mutex;
     private var arr : Array<Int>;
     private var deq : Deque<Int>;
@@ -22,27 +24,26 @@ class Test {
     */
     static public function main () : Void {
         var t = new Test();
-        var repeat = 10000;
+        var repeat = 1000000;
+        var q : Int = 0;
+        var arr = [for(i in 0...repeat) new Test()];
 
-        trace('MUTEX');
-        for(q in 0...5){
+        for(j in 0...5){
             Sys.sleep(0.5);
             var tm = Timer.stamp();
+            var s : Test;
             for(i in 0...repeat){
-                t.mtxAdd(i);
+                s = arr[i];
+                q = s.q;
+                q = s.q;
+                q = s.q;
+                q = s.q;
+                q = s.q;
+                q = s.q;
             }
             trace(Timer.stamp() - tm);
         }
 
-        trace('DEQUE');
-        for(q in 0...3){
-            Sys.sleep(0.5);
-            var tm = Timer.stamp();
-            for(i in 0...repeat){
-                t.deqAdd(i);
-            }
-            trace(Timer.stamp() - tm);
-        }
     }//function main()
 
 /*******************************************************************************

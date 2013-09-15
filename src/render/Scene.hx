@@ -25,9 +25,7 @@ class Scene extends Worker{
     public var drawData (default,null) : Array<Float>;
     /** helper var for array swapping */
     private var _tmpData : Array<Float>;
-    /** whether to skip one frame update */
-    public var skipFrame : Bool = false;
-
+    
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -65,59 +63,61 @@ class Scene extends Worker{
     *
     */
     override public function main () : Void {
-        var sprite     : Sprite;
+        for(i in 0...this._children.length){
+            if( this._children[i].runUpdate ){
+//                this._children[i].lock();
+                this._children[i].update();
+//                this._children[i].release();
+            }
+        }
+    }//function main()
+
+
+    /**
+    * Gather draw data
+    *
+    */
+    public function getDrawData() : Array<Float> {
         var cos        : Float;
         var sin        : Float;
         var dataLength : Int = 0;
 
         for(i in 0...this._children.length){
-            sprite = this._children[i];
+            if( this._children[i].visible ){
+//                this._children[i].lock();
 
-            if( sprite.visible && !this.skipFrame ){
+                cos = Math.cos(this._children[i].rotation);
+                sin = Math.sin(this._children[i].rotation);
 
-                cos = Math.cos(sprite.rotation);
-                sin = Math.sin(sprite.rotation);
-
-                this._drawDataPrep[ dataLength++ ] = sprite.x;
-                this._drawDataPrep[ dataLength++ ] = sprite.y;
-                this._drawDataPrep[ dataLength++ ] = sprite.tile;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].x;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].y;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].tile;
                 // [ a, b
                 //   c, d ]
                 //a
-                this._drawDataPrep[ dataLength++ ] = sprite.scaleX * cos;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].scaleX * cos;
                 //b
-                this._drawDataPrep[ dataLength++ ] = sprite.scaleX * sin;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].scaleX * sin;
                 //c
-                this._drawDataPrep[ dataLength++ ] = -sprite.scaleY * sin;
+                this._drawDataPrep[ dataLength++ ] = -this._children[i].scaleY * sin;
                 //d
-                this._drawDataPrep[ dataLength++ ] = sprite.scaleY * cos;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].scaleY * cos;
 
-                this._drawDataPrep[ dataLength++ ] = sprite.red;
-                this._drawDataPrep[ dataLength++ ] = sprite.green;
-                this._drawDataPrep[ dataLength++ ] = sprite.blue;
-                this._drawDataPrep[ dataLength++ ] = sprite.alpha;
-            }
+                this._drawDataPrep[ dataLength++ ] = this._children[i].red;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].green;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].blue;
+                this._drawDataPrep[ dataLength++ ] = this._children[i].alpha;
 
-            if( sprite.runUpdate ){
-                sprite.update();
+//                this._children[i].release();
             }
         }
 
-        //don't update draw data if we need to skip this frame
-        if( this.skipFrame ){
-            this.skipFrame = false;
-
-        //update draw data
-        }else{
-            if( dataLength < this._drawDataPrep.length ){
-                this._drawDataPrep.splice(dataLength, 0xFFFFFF);
-            }
-
-            this._tmpData      = this.drawData;
-            this.drawData      = this._drawDataPrep;
-            this._drawDataPrep = this._tmpData;
+        if( dataLength < this._drawDataPrep.length ){
+            this._drawDataPrep.splice(dataLength, 0xFFFFFF);
         }
-    }//function main()
+
+        return this._drawDataPrep;
+    }//function getDrawData()
 
 
     /**
@@ -125,7 +125,6 @@ class Scene extends Worker{
     *
     */
     override public function onOverwork (delta:Float) : Void {
-        this.skipFrame = true;
         trace('Overwork - ' + this._children.length + ' - by ' + delta + ' seconds');
     }//function onOverwork()
 

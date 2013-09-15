@@ -1,5 +1,6 @@
 package render;
 
+import usys.vm.Thread;
 import usys.vm.Mutex;
 import render.Scene;
 
@@ -36,7 +37,10 @@ class Sprite {
     public var visible : Bool = true;
     /** scene instance */
     public var scene : Scene = null;
-
+    /** mutex for sprite locking */
+    private var _mutex : Mutex;
+    /** thread, which acquired this sprite for some actions */
+    private var _lockerThread : Thread;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -53,6 +57,7 @@ class Sprite {
     *
     */
     public function new () : Void {
+        this._mutex = new Mutex();
     }//function new()
 
 
@@ -62,6 +67,31 @@ class Sprite {
     */
     public function update () : Void {
     }//function update()
+
+
+    /**
+    * Lock this sprite to prevent modification by other threads
+    *
+    */
+    public function lock() : Void {
+        if( this._lockerThread == Thread.current() ){
+            return;
+        }else{
+            this._mutex.acquire();
+            this._lockerThread = Thread.current();
+        }
+    }//function lock()
+
+    
+    /**
+    * Release this sprite to allow modification by other threads
+    *
+    */
+    public function release() : Void {
+        this._lockerThread = null;
+        this._mutex.release();
+    }//function release()
+
 
 /*******************************************************************************
 *       GETTERS / SETTERS
